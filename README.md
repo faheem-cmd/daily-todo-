@@ -2,8 +2,7 @@ DailyTodo is a simple and intuitive macOS app designed to help you organize and 
 
 # You can find download link here : https://www.iamfaheem.tk/Project.html
 
-<img width="775" alt="Screenshot 2023-08-01 at 1 54 12 PM" src="https://github.com/faheem-cmd/daily-todo-macos/assets/56709898/ba5ad61f-25fd-4428-82a1-584e8c007f54">
-<img width="777" alt="Screenshot 2023-08-01 at 1 54 32 PM" src="https://github.com/faheem-cmd/daily-todo-macos/assets/56709898/7d9d1456-e7b4-4e65-96f3-63eafea72cc2">
+<img width="782" alt="Screenshot 2023-08-05 at 12 07 35 PM" src="https://github.com/faheem-cmd/daily-todo-macos/assets/56709898/2f11459d-c372-4654-a1b0-d6803922a3e8"><img width="787" alt="Screenshot 2023-08-05 at 12 07 43 PM" src="https://github.com/faheem-cmd/daily-todo-macos/assets/56709898/bbc069e2-f946-4531-b123-729ce08d718b">
 
 **Key Features:**
 1. **Add and Delete Todos:** Easily add new todos by entering the task name and selecting the desired time using the built-in time picker. Delete tasks with a simple swipe or use the trash icon for quick removal.
