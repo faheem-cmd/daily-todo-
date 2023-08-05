@@ -30,6 +30,7 @@ DailyTodo is a simple and intuitive macOS app designed to help you organize and 
 Contributions to MyDailyTodos are more than welcome! If you have any feature requests, bug reports, or general suggestions to enhance the app's functionality, please open an issue or submit a pull request.
 # You can find download link here :
 https://www.iamfaheem.tk/Project.html
+
 **License:**
 This app is open-source under the MIT License. Feel free to use, modify, and distribute it according to the terms of the license.
 
