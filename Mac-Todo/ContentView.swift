@@ -1,9 +1,17 @@
 import SwiftUI
+import UserNotifications
 
 struct TodoItem: Identifiable, Codable, Equatable {
     var id = UUID()
     var name: String
-    var time: Date // Add a property for time
+    var time: Date
+    var priority: TodoPriority
+}
+
+enum TodoPriority: String, CaseIterable, Codable {
+    case low = "Low"
+    case medium = "Medium"
+    case high = "High"
 }
 
 struct ContentView: View {
@@ -11,13 +19,27 @@ struct ContentView: View {
     @State private var todoList: [TodoItem] = []
     @State private var deleteAlertShown = false
     @State private var deleteIndex: Int?
-    @State private var selectedTime = Date() // Add a State property for selected time
+    @State private var selectedPriority = TodoPriority.medium
+    @State private var currentDate = Date()
+    @State private var selectedHour = 0
+    @State private var selectedMinute = 0
 
     var body: some View {
         ZStack {
-            Color(NSColor.windowBackgroundColor) // Set light theme background
+            Color(NSColor.windowBackgroundColor)
 
             VStack {
+                Picker(selection: $selectedPriority, label: Text("Priority")) {
+                    ForEach(TodoPriority.allCases, id: \.self) { priority in
+                        Text(priority.rawValue)
+                    }
+                }
+                .pickerStyle(MenuPickerStyle())
+                .padding(.horizontal, 20)
+                .padding(.top, 50)
+                .background(Color(NSColor.windowBackgroundColor))
+                .foregroundColor(.primary)
+
                 List {
                     ForEach(todoList) { todo in
                         HStack {
@@ -27,60 +49,87 @@ struct ContentView: View {
                                     .font(.headline)
                                     .fontWeight(.medium)
 
-                                Text("\(timeFormatter.string(from: todo.time))") // Display the time along with the text
+                                Text("\(timeFormatter.string(from: todo.time))")
                                     .foregroundColor(.secondary)
                                     .font(.subheadline)
+                                    .fixedSize(horizontal: true, vertical: true)
                             }
-                            .padding(.leading) // Add some left padding for better alignment
+                            .padding(.leading)
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                            Spacer() // Add a spacer to push the delete button to the right
+                            Spacer()
+
+                            Text(todo.priority.rawValue)
+                                .foregroundColor(priorityColor(for: todo.priority))
+                                .font(.subheadline)
+                                .frame(maxWidth: .infinity, alignment: .center)
+
+                            Spacer()
 
                             Button(action: {
-                                deleteIndex = todoList.firstIndex(of: todo) // Set the index to be deleted
-                                deleteAlertShown = true // Show the delete alert
+                                deleteIndex = todoList.firstIndex(of: todo)
+                                deleteAlertShown = true
                             }) {
                                 Image(systemName: "trash")
-                                    .foregroundColor(.red) // Set the delete icon color to red
+                                    .foregroundColor(.red)
                             }
-                            .buttonStyle(BorderlessButtonStyle()) // Remove the button background
-
+                            .buttonStyle(BorderlessButtonStyle())
                         }
-                        .contentShape(Rectangle()) // Make the entire row tappable
+                        .contentShape(Rectangle())
                         .onTapGesture {
                             // Optionally, handle tapping on the Todo item here
                         }
                     }
-                    .onDelete(perform: deleteTodos) // Use the correct delete function with IndexSet argument
+                    .onDelete(perform: deleteTodos)
                 }
-                .listStyle(PlainListStyle()) // Use a plain list style
-                .padding() // Add extra padding for better visibility of the list
-                .padding(.top, 20) // Add top margin to the listing section
+                .listStyle(PlainListStyle())
+                .padding()
+                .padding(.top, 20)
 
                 HStack {
                     TextField("Add Todo", text: $newTodoName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
-                        .background(Color(NSColor.windowBackgroundColor)) // Use the window background color for better visibility
-                        .foregroundColor(.primary) // Set the text color to primary
+                        .background(Color(NSColor.windowBackgroundColor))
+                        .foregroundColor(.primary)
+                    
+                    Text(formattedDate)
+                    
+                    HStack {
+                        Picker("", selection: $selectedHour) {
+                            ForEach(1..<13, id: \.self) { hour in
+                                Text(String(format: "%02d", hour))
+                            }
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .frame(width: 60)
 
-                    DatePicker("", selection: $selectedTime, displayedComponents: .hourAndMinute)
-                        .labelsHidden() // Hide the default label of DatePicker
-                        .datePickerStyle(.automatic) // Use the .automatic date picker style
-                        .padding()
-                        .background(Color(NSColor.windowBackgroundColor)) // Use the window background color for better visibility
-                        .foregroundColor(.primary) // Set the text color to primary
+                        Text(":")
+                            .foregroundColor(.primary)
+
+                        Picker("", selection: $selectedMinute) {
+                            ForEach(0..<60, id: \.self) { minute in
+                                Text(String(format: "%02d", minute))
+                            }
+                        }
+                        .pickerStyle(MenuPickerStyle())
+                        .frame(width: 60)
+                    }
+                    .padding()
+                    .background(Color(NSColor.windowBackgroundColor))
+                    .foregroundColor(.primary)
 
                     Button(action: addTodo) {
                         Image(systemName: "plus")
-                            .foregroundColor(.black) // Set the foreground color of the "plus" icon to black
+                            .foregroundColor(.black)
                     }
                     .padding()
-                    .background(Color.blue) // Set the background color of the button
-                    .clipShape(Circle()) // Make it a circle-shaped button
+                    .background(Color.blue)
+                    .clipShape(Circle())
 
                 }
                 .padding(.horizontal)
-                .padding(.bottom) // Add bottom padding to separate the list from the input area
+                .padding(.bottom)
             }
         }
         .edgesIgnoringSafeArea(.all)
@@ -90,29 +139,49 @@ struct ContentView: View {
                 message: Text("Are you sure you want to delete this item?"),
                 primaryButton: .destructive(Text("Delete"), action: {
                     if let deleteIndex = deleteIndex {
-                        deleteTodos(at: IndexSet(integer: deleteIndex)) // Call delete function with IndexSet argument
+                        deleteTodos(at: IndexSet(integer: deleteIndex))
                     }
                 }),
                 secondaryButton: .cancel {
-                    deleteIndex = nil // Clear the deleteIndex after dismissing the alert
+                    deleteIndex = nil
                 }
             )
+        }
+        .onAppear {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in
+                // Handle user authorization response if needed
+            }
+            loadTodoList()
+        }
+        .onDisappear {
+            saveTodoList()
         }
     }
 
     func addTodo() {
         let trimmedTodoName = newTodoName.trimmingCharacters(in: .whitespacesAndNewlines)
         if !trimmedTodoName.isEmpty {
-            let newTodo = TodoItem(name: trimmedTodoName, time: selectedTime) // Save the selected time along with the Todo
+            var components = Calendar.current.dateComponents([.year, .month, .day], from: currentDate)
+            components.hour = selectedHour
+            components.minute = selectedMinute
+            components.second = 0
+            components.timeZone = TimeZone.current // Use the current time zone
+            guard let selectedTime = Calendar.current.date(from: components) else {
+                return
+            }
+            let newTodo = TodoItem(name: trimmedTodoName, time: selectedTime, priority: selectedPriority)
             todoList.append(newTodo)
             newTodoName = ""
-            saveTodoList()
+            scheduleReminder(for: newTodo)
         }
     }
 
     func deleteTodos(at offsets: IndexSet) {
+        for offset in offsets {
+            let todo = todoList[offset]
+            cancelReminder(for: todo)
+        }
         todoList.remove(atOffsets: offsets)
-        saveTodoList()
     }
 
     func saveTodoList() {
@@ -120,18 +189,54 @@ struct ContentView: View {
             UserDefaults.standard.set(encodedData, forKey: "TodoList")
         }
     }
-}
 
-// Custom time formatter to display time
-fileprivate let timeFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.timeStyle = .short
-    formatter.locale = Locale(identifier: "en_US_POSIX") // Set the locale to use the 12-hour clock format
-    return formatter
-}()
+    func loadTodoList() {
+        if let data = UserDefaults.standard.data(forKey: "TodoList") {
+            if let decodedTodoList = try? JSONDecoder().decode([TodoItem].self, from: data) {
+                todoList = decodedTodoList
+            }
+        }
+    }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    func scheduleReminder(for todo: TodoItem) {
+        let content = UNMutableNotificationContent()
+        content.title = "Reminder"
+        content.body = "Todo: \(todo.name)"
+        content.sound = UNNotificationSound.default
+
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: todo.time)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+
+        let request = UNNotificationRequest(identifier: todo.id.uuidString, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request)
+    }
+
+    func cancelReminder(for todo: TodoItem) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [todo.id.uuidString])
+    }
+
+    private func priorityColor(for priority: TodoPriority) -> Color {
+        switch priority {
+        case .low:
+            return .green
+        case .medium:
+            return .orange
+        case .high:
+            return .red
+        }
+    }
+
+    private var timeFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a" // 12-hour format
+        return formatter
+    }
+
+    private var formattedDate: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, d, yyyy"
+        return dateFormatter.string(from: currentDate)
     }
 }
+

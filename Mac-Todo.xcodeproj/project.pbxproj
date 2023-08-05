@@ -34,7 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		438CA0BC2A78E6E600D96185 /* Mac-Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac-Todo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		438CA0BC2A78E6E600D96185 /* Daily-Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Daily-Todo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		438CA0BF2A78E6E600D96185 /* Mac_TodoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mac_TodoApp.swift; sourceTree = "<group>"; };
 		438CA0C12A78E6E600D96185 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		438CA0C32A78E6E700D96185 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -85,7 +85,7 @@
 		438CA0BD2A78E6E600D96185 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				438CA0BC2A78E6E600D96185 /* Mac-Todo.app */,
+				438CA0BC2A78E6E600D96185 /* Daily-Todo.app */,
 				438CA0CD2A78E6E700D96185 /* Mac-TodoTests.xctest */,
 				438CA0D72A78E6E700D96185 /* Mac-TodoUITests.xctest */,
 			);
@@ -132,9 +132,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		438CA0BB2A78E6E600D96185 /* Mac-Todo */ = {
+		438CA0BB2A78E6E600D96185 /* Daily-Todo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 438CA0E12A78E6E700D96185 /* Build configuration list for PBXNativeTarget "Mac-Todo" */;
+			buildConfigurationList = 438CA0E12A78E6E700D96185 /* Build configuration list for PBXNativeTarget "Daily-Todo" */;
 			buildPhases = (
 				438CA0B82A78E6E600D96185 /* Sources */,
 				438CA0B92A78E6E600D96185 /* Frameworks */,
@@ -144,9 +144,9 @@
 			);
 			dependencies = (
 			);
-			name = "Mac-Todo";
+			name = "Daily-Todo";
 			productName = "Mac-Todo";
-			productReference = 438CA0BC2A78E6E600D96185 /* Mac-Todo.app */;
+			productReference = 438CA0BC2A78E6E600D96185 /* Daily-Todo.app */;
 			productType = "com.apple.product-type.application";
 		};
 		438CA0CC2A78E6E700D96185 /* Mac-TodoTests */ = {
@@ -221,7 +221,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				438CA0BB2A78E6E600D96185 /* Mac-Todo */,
+				438CA0BB2A78E6E600D96185 /* Daily-Todo */,
 				438CA0CC2A78E6E700D96185 /* Mac-TodoTests */,
 				438CA0D62A78E6E700D96185 /* Mac-TodoUITests */,
 			);
@@ -286,12 +286,12 @@
 /* Begin PBXTargetDependency section */
 		438CA0CF2A78E6E700D96185 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 438CA0BB2A78E6E600D96185 /* Mac-Todo */;
+			target = 438CA0BB2A78E6E600D96185 /* Daily-Todo */;
 			targetProxy = 438CA0CE2A78E6E700D96185 /* PBXContainerItemProxy */;
 		};
 		438CA0D92A78E6E700D96185 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 438CA0BB2A78E6E600D96185 /* Mac-Todo */;
+			target = 438CA0BB2A78E6E600D96185 /* Daily-Todo */;
 			targetProxy = 438CA0D82A78E6E700D96185 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -548,7 +548,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		438CA0E12A78E6E700D96185 /* Build configuration list for PBXNativeTarget "Mac-Todo" */ = {
+		438CA0E12A78E6E700D96185 /* Build configuration list for PBXNativeTarget "Daily-Todo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				438CA0E22A78E6E700D96185 /* Debug */,
