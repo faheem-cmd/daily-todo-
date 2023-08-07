@@ -23,6 +23,7 @@ struct ContentView: View {
     @State private var currentDate = Date()
     @State private var selectedHour = 0
     @State private var selectedMinute = 0
+    @State private var isAM = true // New state variable to track AM/PM selection
 
     var body: some View {
         ZStack {
@@ -119,6 +120,14 @@ struct ContentView: View {
                     .background(Color(NSColor.windowBackgroundColor))
                     .foregroundColor(.primary)
 
+                    // New AM/PM dropdown
+                    Picker("", selection: $isAM) {
+                        Text("AM").tag(true)
+                        Text("PM").tag(false)
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    .frame(width: 60)
+
                     Button(action: addTodo) {
                         Image(systemName: "plus")
                             .foregroundColor(.black)
@@ -161,8 +170,8 @@ struct ContentView: View {
     func addTodo() {
         let trimmedTodoName = newTodoName.trimmingCharacters(in: .whitespacesAndNewlines)
         if !trimmedTodoName.isEmpty {
-            var components = Calendar.current.dateComponents([.year, .month, .day], from: currentDate)
-            components.hour = selectedHour
+            var components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: currentDate)
+            components.hour = selectedHour + (isAM ? 0 : 12) // Convert to 24-hour format if PM
             components.minute = selectedMinute
             components.second = 0
             components.timeZone = TimeZone.current // Use the current time zone
