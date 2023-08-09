@@ -33,4 +33,4 @@ Contributions to MyDailyTodos are more than welcome! If you have any feature req
 **License:**
 This app is open-source under the MIT License. Feel free to use, modify, and distribute it according to the terms of the license.
 
-*Start organizing your days with MyDailyTodos today!*
+*Start organizing your days with MyDailyTodos today.!*
