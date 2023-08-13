@@ -1,4 +1,4 @@
-DailyTodo is a simple and intuitive macOS app designed to help you organize and manage your daily tasks efficiently. Whether it's work-related assignments, personal chores, or any other tasks, this app allows you to create your own todos and stay on top of your daily responsibilities.
+DailyTodo is a simple and intuitive macOS app designed to help you organize and manage your daily tasks efficiently. Whether it's work-related assignments, personal chores, or any other tasks, this app allows you to create your own todos and stay on top of your daily responsibilities .
 
 # You can find download link here : https://www.iamfaheem.tk/Project.html
 
