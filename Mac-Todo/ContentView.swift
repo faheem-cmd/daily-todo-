@@ -23,7 +23,7 @@ struct ContentView: View {
     @State private var currentDate = Date()
     @State private var selectedHour = 0
     @State private var selectedMinute = 0
-    @State private var isAM = true // New state variable to track AM/PM selection
+    @State private var isAM = true 
 
     var body: some View {
         ZStack {
