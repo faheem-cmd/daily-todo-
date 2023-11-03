@@ -1,6 +1,6 @@
 DailyTodo is a simple and intuitive macOS app designed to help you organize and manage your daily tasks efficiently. Whether it's work-related assignments, personal chores, or any other tasks, this app allows you to create your own todos and stay on top of your daily responsibilities .
 
-## You can find download link here : https://www.iamfaheem.tk/Project.html
+## You can find download link here : https://faheem-cmd.github.io/portfolio/Project.html
 
 <img width="782" alt="Screenshot 2023-08-05 at 12 07 35 PM" src="https://github.com/faheem-cmd/daily-todo-macos/assets/56709898/2f11459d-c372-4654-a1b0-d6803922a3e8"><img width="851" alt="Screenshot 2023-08-18 at 12 23 11 AM" src="https://github.com/faheem-cmd/daily-todo-macos/assets/56709898/2190ea87-c478-4141-b9c6-013636e1995b">
 
